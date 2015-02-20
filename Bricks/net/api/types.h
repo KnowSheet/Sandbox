@@ -51,8 +51,7 @@ struct HTTPRequestGET {
   std::string url;
   std::string custom_user_agent;
 
-  explicit HTTPRequestGET(const std::string& url) : url(url) {
-  }
+  explicit HTTPRequestGET(const std::string& url) : url(url) {}
 
   HTTPRequestGET& SetUserAgent(const std::string& ua) {
     custom_user_agent = ua;
@@ -67,8 +66,7 @@ struct HTTPRequestPOST {
   std::string content_type;
 
   explicit HTTPRequestPOST(const std::string& url, const std::string& body, const std::string& content_type)
-      : url(url), body(body), content_type(content_type) {
-  }
+      : url(url), body(body), content_type(content_type) {}
 
   HTTPRequestPOST& SetUserAgent(const std::string& ua) {
     custom_user_agent = ua;
@@ -85,8 +83,7 @@ struct HTTPRequestPOSTFromFile {
   explicit HTTPRequestPOSTFromFile(const std::string& url,
                                    const std::string& file_name,
                                    const std::string& content_type)
-      : url(url), file_name(file_name), content_type(content_type) {
-  }
+      : url(url), file_name(file_name), content_type(content_type) {}
 
   HTTPRequestPOSTFromFile& SetUserAgent(const std::string& ua) {
     custom_user_agent = ua;
@@ -124,8 +121,7 @@ struct KeepResponseInMemory {};
 
 struct SaveResponseToFile {
   std::string file_name;
-  explicit SaveResponseToFile(const std::string& file_name) : file_name(file_name) {
-  }
+  explicit SaveResponseToFile(const std::string& file_name) : file_name(file_name) {}
 };
 
 // Template metaprogramming for selecting the right types at compile time,

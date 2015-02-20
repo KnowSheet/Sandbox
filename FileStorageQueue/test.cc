@@ -25,11 +25,13 @@ struct TestOutputFilesProcessor {
     } else if (mimic_need_retry_) {
       return fsq::FileProcessingResult::FailureNeedRetry;
     } else {
+      const std::string raw_file_contents = bricks::ReadFileAsString(file_info.full_path_name);
+      assert(file_info.size == raw_file_contents.length());
       if (!finalized_count) {
-        contents = bricks::ReadFileAsString(file_info.full_path_name);
+        contents = raw_file_contents;
         filenames = file_info.name;
       } else {
-        contents = contents + "FILE SEPARATOR\n" + bricks::ReadFileAsString(file_info.full_path_name);
+        contents = contents + "FILE SEPARATOR\n" + raw_file_contents;
         filenames = filenames + "|" + file_info.name;
       }
       timestamp = now;

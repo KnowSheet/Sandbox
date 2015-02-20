@@ -73,9 +73,7 @@ class HTTPClientPOSIX final {
     return true;
   }
 
-  const HTTPRedirectableReceivedMessage& GetMessage() const {
-    return *message_.get();
-  }
+  const HTTPRedirectableReceivedMessage& GetMessage() const { return *message_.get(); }
 
  public:
   // Request parameters.
@@ -129,8 +127,7 @@ struct ImplWrapper<HTTPClientPOSIX> {
     client.request_body_content_type_ = request.content_type;
   }
 
-  inline static void PrepareInput(const KeepResponseInMemory&, HTTPClientPOSIX&) {
-  }
+  inline static void PrepareInput(const KeepResponseInMemory&, HTTPClientPOSIX&) {}
 
   inline static void PrepareInput(const SaveResponseToFile& save_to_file_request, HTTPClientPOSIX&) {
     assert(!save_to_file_request.file_name.empty());

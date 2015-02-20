@@ -93,9 +93,7 @@ class ScopedRemoveFile final {
       RemoveFile(file_name_, RemoveFileParameters::Silent);
     }
   }
-  ~ScopedRemoveFile() {
-    RemoveFile(file_name_, RemoveFileParameters::Silent);
-  }
+  ~ScopedRemoveFile() { RemoveFile(file_name_, RemoveFileParameters::Silent); }
 
  private:
   std::string file_name_;
@@ -109,7 +107,9 @@ struct FileSystem {
     return bricks::ReadFileAsString(file_name);
   }
 
-  static inline void WriteStringToFile(const std::string& file_name, const std::string& contents, bool append = false) {
+  static inline void WriteStringToFile(const std::string& file_name,
+                                       const std::string& contents,
+                                       bool append = false) {
     bricks::WriteStringToFile(file_name, contents, append);
   }
 
@@ -130,11 +130,12 @@ struct FileSystem {
   }
 
   static inline void RemoveFile(const std::string& file_name,
-                         RemoveFileParameters parameters = RemoveFileParameters::ThrowExceptionOnError) {
+                                RemoveFileParameters parameters = RemoveFileParameters::ThrowExceptionOnError) {
     bricks::RemoveFile(file_name, parameters);
   }
 
-  static inline void ScanDirUntil(const std::string& directory, std::function<bool(const std::string&)> lambda) {
+  static inline void ScanDirUntil(const std::string& directory,
+                                  std::function<bool(const std::string&)> lambda) {
     DIR* dir = ::opendir(directory.c_str());
     const auto closedir_guard = MakeScopeGuard([dir]() { ::closedir(dir); });
     if (dir) {

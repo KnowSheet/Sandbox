@@ -31,8 +31,7 @@ class SocketHandle {
   struct NewHandle final {};
   struct FromHandle final {
     int handle;
-    FromHandle(int handle) : handle(handle) {
-    }
+    FromHandle(int handle) : handle(handle) {}
   };
 
   inline SocketHandle(NewHandle) : socket_(::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) {
@@ -53,9 +52,7 @@ class SocketHandle {
     }
   }
 
-  inline explicit SocketHandle(SocketHandle&& rhs) : socket_(-1) {
-    std::swap(socket_, rhs.socket_);
-  }
+  inline explicit SocketHandle(SocketHandle&& rhs) : socket_(-1) { std::swap(socket_, rhs.socket_); }
 
   void operator=(SocketHandle&& rhs) {
     socket_ = -1;
@@ -69,8 +66,7 @@ class SocketHandle {
   // The `ReadOnlyIntFieldAccessor socket` members provide simple read-only access to `socket_` via `socket`.
   class ReadOnlyIntFieldAccessor final {
    public:
-    explicit ReadOnlyIntFieldAccessor(const int& ref) : ref_(ref) {
-    }
+    explicit ReadOnlyIntFieldAccessor(const int& ref) : ref_(ref) {}
     inline operator int() {
       if (!ref_) {
         throw InvalidSocketException();
@@ -92,20 +88,14 @@ class SocketHandle {
 
 class Connection : public SocketHandle {
  public:
-  inline Connection(SocketHandle&& rhs) : SocketHandle(std::move(rhs)) {
-  }
+  inline Connection(SocketHandle&& rhs) : SocketHandle(std::move(rhs)) {}
 
-  inline Connection(Connection&& rhs) : SocketHandle(std::move(rhs)) {
-  }
+  inline Connection(Connection&& rhs) : SocketHandle(std::move(rhs)) {}
 
-  inline void operator=(Connection&& rhs) {
-    SocketHandle::operator=(std::move(rhs));
-  }
+  inline void operator=(Connection&& rhs) { SocketHandle::operator=(std::move(rhs)); }
 
   // Closes the outbound side of the socket and notifies the other party that no more data will be sent.
-  inline void SendEOF() {
-    ::shutdown(socket, SHUT_WR);
-  }
+  inline void SendEOF() { ::shutdown(socket, SHUT_WR); }
 
   // By default, BlockingRead() will return as soon as some data has been read,
   // with the exception being multibyte records (sizeof(T) > 1), where it will keep reading

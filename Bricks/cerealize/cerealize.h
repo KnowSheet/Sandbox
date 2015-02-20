@@ -22,11 +22,9 @@ namespace cerealize {
 // for Cereal to serialize them as polymorphic types.
 struct EmptyDeleterForAnyType {
   template <typename T>
-  void operator()(T&) {
-  }
+  void operator()(T&) {}
   template <typename T>
-  void operator()(T*) {
-  }
+  void operator()(T*) {}
 };
 
 template <typename BASE, typename ENTRY>
@@ -64,8 +62,7 @@ template <CerealFormat T_CEREAL_FORMAT>
 class GenericCerealFileAppender {
  public:
   explicit GenericCerealFileAppender(const std::string& filename, bool append = true)
-      : fo_(filename, (append ? std::ofstream::app : std::ofstream::trunc) | std::ofstream::binary), so_(fo_) {
-  }
+      : fo_(filename, (append ? std::ofstream::app : std::ofstream::trunc) | std::ofstream::binary), so_(fo_) {}
 
   template <typename T>
   typename std::enable_if<sizeof(typename T::CEREAL_BASE_TYPE) != 0, GenericCerealFileAppender&>::type
@@ -90,8 +87,7 @@ typedef GenericCerealFileAppender<CerealFormat::Default> CerealFileAppender;
 template <typename T_ENTRY, CerealFormat T_CEREAL_FORMAT>
 class GenericCerealFileParser {
  public:
-  explicit GenericCerealFileParser(const std::string& filename) : fi_(filename), si_(fi_) {
-  }
+  explicit GenericCerealFileParser(const std::string& filename) : fi_(filename), si_(fi_) {}
 
   // `Next` calls `T_PROCESSOR::operator()(const T_ENTRY&)` for the next entry, or returns false.
   template <typename T_PROCESSOR>
